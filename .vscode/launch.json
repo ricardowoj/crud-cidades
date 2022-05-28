@@ -1,0 +1,15 @@
+{
+	"configurations": [
+		{
+			"type": "java",
+			"name": "Spring Boot-CrudCidadesApplication<crud-cidades>",
+			"request": "launch",
+			"cwd": "${workspaceFolder}",
+			"console": "internalConsole",
+			"mainClass": "br.edu.utfpr.cp.espjava.crudcidades.CrudCidadesApplication",
+			"projectName": "crud-cidades",
+			"args": "",
+			"envFile": "${workspaceFolder}/.env"
+		}
+	]
+}
