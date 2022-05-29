@@ -9,35 +9,36 @@ import javax.persistence.Id;
 
 @Entity(name = "cidade")
 public class CidadeEntidade implements Serializable {
+	private static final long serialVersionUID = 8334629867180817893L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String nome;
-    private String estado;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	private String nome;
+	private String estado;
 
-    public Long getId() {
-        return this.id;
-    }
+	public Long getId() {
+		return this.id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getNome() {
-        return this.nome;
-    }
+	public String getNome() {
+		return this.nome;
+	}
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 
-    public String getEstado() {
-        return this.estado;
-    }
+	public String getEstado() {
+		return this.estado;
+	}
 
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
 
 }
