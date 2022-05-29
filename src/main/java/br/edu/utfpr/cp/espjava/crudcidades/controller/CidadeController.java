@@ -1,9 +1,11 @@
 package br.edu.utfpr.cp.espjava.crudcidades.controller;
 
+import java.security.Principal;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,13 +32,16 @@ public class CidadeController {
     }
 
     @GetMapping("/")
-    public String listar(Model memoria) {
+    public String listar(Model memoria, Principal usuario, HttpSession sessao) {
         memoria.addAttribute("listaCidades",
                 repository
                         .findAll()
                         .stream()
                         .map(cidade -> new Cidade(cidade.getNome(), cidade.getEstado()))
                         .collect(Collectors.toList()));
+        
+        sessao.setAttribute("usuarioAtual", usuario.getName());
+        
         return "/crud";
     }
 
