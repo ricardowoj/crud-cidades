@@ -25,6 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/prepararAlterar").hasAnyAuthority("admin")
 				.antMatchers("/alterar").hasAnyAuthority("admin")
 				.antMatchers("/h2-console/**").permitAll()
+				.antMatchers("/mostrar").authenticated()
 				.anyRequest().authenticated()
 				.and()
 				.headers().frameOptions().sameOrigin()

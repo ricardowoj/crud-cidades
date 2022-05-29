@@ -1,10 +1,13 @@
 package br.edu.utfpr.cp.espjava.crudcidades.controller;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -12,9 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.edu.utfpr.cp.espjava.crudcidades.domain.Cidade;
 import br.edu.utfpr.cp.espjava.crudcidades.repository.CidadeRepository;
@@ -32,7 +37,7 @@ public class CidadeController {
     }
 
     @GetMapping("/")
-    public String listar(Model memoria, Principal usuario, HttpSession sessao) {
+    public String listar(Model memoria, Principal usuario, HttpSession sessao, HttpServletResponse res) {
         memoria.addAttribute("listaCidades",
                 repository
                         .findAll()
@@ -42,6 +47,7 @@ public class CidadeController {
         
         sessao.setAttribute("usuarioAtual", usuario.getName());
         
+        res.addCookie(new Cookie("listar", LocalDateTime.now().toString()));
         return "/crud";
     }
 
@@ -95,5 +101,11 @@ public class CidadeController {
             repository.saveAndFlush(cidadeEncontrada);
         }
         return "redirect:/";
+    }
+    
+    @GetMapping("/mostrar")
+    @ResponseBody
+    public String mostraCookieAlterar(@CookieValue String listar) {
+    	return "Último acesso ao método listar(): " + listar;
     }
 }
