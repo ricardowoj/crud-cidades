@@ -24,24 +24,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public PasswordEncoder cifrador() {
 		return new BCryptPasswordEncoder();
 	}
-	
+
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable()
-					.authorizeRequests()
+		http
+			.csrf().disable()
+				.authorizeRequests()
 					.antMatchers("/").hasAnyAuthority("listar", "admin")
-					.antMatchers("/criar").hasAuthority("admin")
-					.antMatchers("/excluir").hasAuthority("admin")
-					.antMatchers("/preparaAlterar").hasAuthority("admin")
-					.antMatchers("/alterar").hasAuthority("admin")
-					.antMatchers("/mostrar").authenticated()
+					.antMatchers("/criar").hasAnyAuthority("admin")
+					.antMatchers("/excluir").hasAnyAuthority("admin")
+					.antMatchers("/prepararAlterar").hasAnyAuthority("admin")
+					.antMatchers("/alterar").hasAnyAuthority("admin")
 			        .antMatchers("/h2-console/**").permitAll()
-					.anyRequest().denyAll()
-					.and()
-					.formLogin()
-					.loginPage("/login.html").permitAll()
-					.defaultSuccessUrl("/", false)
-					.and()
-					.logout().permitAll();
+				.anyRequest().authenticated()
+	            .and()
+	            .headers().frameOptions().sameOrigin()
+				.and()
+				.formLogin().loginPage("/login.html").permitAll()
+				.and()
+				.logout().permitAll()
+				;
 	}
 
 	@EventListener(ApplicationReadyEvent.class)
